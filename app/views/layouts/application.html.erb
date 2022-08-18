@@ -11,6 +11,13 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+      <a href="/lists" class="navbar-brand">Movies Galore</a>
+      <form class="form-inline">
+        <a href="/lists"><button class="btn btn-outline-primary my-2 my-sm-0" type="submit">My Lists</button></a>
+        <a href="/lists/new"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add List</button></a>
+      </form>
+    </nav>
     <%= yield %>
   </body>
 </html>

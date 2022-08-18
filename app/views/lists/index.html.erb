@@ -1,0 +1,14 @@
+<div class="index-container">
+  <h1>All Lists (<%= List.count %>)</h1>
+
+    <div class="flex-container">
+      <% @lists.each do |list| %>
+        <%= link_to list_path(list) do %>
+        <div class="card">
+          <img src="https://source.unsplash.com/random/900×700/?f<%= list.name %>" alt="image for <%= list.name %> list">
+          <h2><%= list.name %></h2>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+</div>
