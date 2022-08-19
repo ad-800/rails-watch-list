@@ -26,17 +26,23 @@ h2 {
 }
 
 // Flex Cards
+
+// <img src="<%= list.photo_url %>" alt="Image of <%= list.name %>">
 .card {
   margin: 10px;
-  background-color: $red;
   color: $white;
   height: 350px;
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
   width: 19rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-shadow: 1px 1px 3px #444;;
+}
+
+.card > img {
+  height: 200px;
 }
 
 .index-container {
@@ -47,6 +53,8 @@ h2 {
   width: auto;
 }
 
+
+// Bookmark
 .bookmark-card > img {
   height: 350px;
 }

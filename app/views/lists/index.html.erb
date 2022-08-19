@@ -5,7 +5,11 @@
       <div class="row">
         <% @lists.each do |list| %>
           <%= link_to list_path(list) do %>
-          <div class="card col-4 col-sm-2">
+            <% if list.photo_url.nil? %>
+              <div class="card col-4 col-sm-2" style="background-image: url('https://static.vecteezy.com/system/resources/previews/006/014/383/original/it-s-movie-time-print-concept-with-lettering-watching-cinema-with-popcorn-film-reel-movie-cracker-flat-hand-drawn-illustration-vector.jpg');">
+            <% else %>
+              <div class="card col-4 col-sm-2" style="background-image: url(<%= list.photo_url %>);">
+            <% end %>
             <h2><%= list.name %></h2>
           </div>
           <% end %>
