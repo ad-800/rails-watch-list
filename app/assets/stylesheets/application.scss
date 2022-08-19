@@ -11,36 +11,77 @@
 @import "components/index";
 @import "pages/index";
 
-.card > img, .card {
-  width: 250px;
-}
-
-.card > img {
-  height: 200px;
-}
-
-.card {
-  margin: 10px;
-  text-align: center;
-}
-
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 a {
   text-decoration: none;
 }
 
 h1 {
   font-size: 30px;
+  margin: 1.5rem 0;
 }
 
 h2 {
   font-size: 25px;
+  margin: 0;
+}
+
+// Flex Cards
+.card {
+  margin: 10px;
+  background-color: $red;
+  color: $white;
+  height: 350px;
+  object-fit: cover;
+  width: 19rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1px 1px 3px #444;;
 }
 
 .index-container {
-  margin: 1rem 3rem;
+  margin: 1rem 5rem;
+}
+
+.row > * {
+  width: auto;
+}
+
+.bookmark-card > img {
+  height: 350px;
+}
+
+.bookmark-card {
+  margin: 10px;
+  width: 19rem;
+  text-align: left;
+  padding: 5px 0;
+}
+
+.bookmark-card > h2 {
+  padding: 10px 10px 10px 0px;
+}
+
+.bookmark-card > img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.show-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 25px;
+}
+
+.form-new {
+  margin: 25px auto;
+  width: 400px;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.form-buttons {
+  left: 50%;
+  top: 50%;
 }
