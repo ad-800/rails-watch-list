@@ -1,19 +1,13 @@
 <div class="index-container">
-  <h1>All Lists (<%= List.count %>)</h1>
-
-    <div class="container text-center">
-      <div class="row">
-        <% @lists.each do |list| %>
-          <%= link_to list_path(list) do %>
-            <% if list.photo_url.nil? || list.photo_url == "" %>
-              <div class="card col-4 col-sm-2" style="background-image: url('https://static.vecteezy.com/system/resources/previews/006/014/383/original/it-s-movie-time-print-concept-with-lettering-watching-cinema-with-popcorn-film-reel-movie-cracker-flat-hand-drawn-illustration-vector.jpg');">
-            <% else %>
-              <div class="card col-4 col-sm-2" style="background-image: url(<%= list.photo_url %>);">
-            <% end %>
-            <h2><%= list.name %></h2>
-          </div>
-          <% end %>
-        <% end %>
-      </div>
+  <h1>Movies</h1>
+  <div class="container text-center">
+    <div class="row">
+      <% @movies.each do |movie| %>
+        <img src="<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
+        <h3><%= movie.title %></h3>
+        <p><%= movie.rtscore %></p>
+        <p><%= movie.mcscore %></p>
+      <% end %>
     </div>
+  </div>
 </div>
