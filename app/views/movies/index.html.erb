@@ -1,12 +1,23 @@
 <div class="index-container">
   <h1>Movies</h1>
-  <div class="container text-center">
+  <div class="container">
     <div class="row">
-      <% @movies.each do |movie| %>
-        <img src="<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
-        <h3><%= movie.title %></h3>
-        <p><%= movie.rtscore %></p>
-        <p><%= movie.mcscore %></p>
+    <% @movies.each do |movie| %>
+        <div class="col-2 column">
+          <img src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
+          <div class="score">
+            <% unless movie.rtscore.zero? %>
+              <% if movie.rtscore > 60 %>
+                <p class="rt-score"><%= image_tag "tomato.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
+              <% else %>
+                <p class="rt-score"><%= image_tag "tomatosplat.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
+              <% end %>
+            <% end %>
+            <% unless movie.mcscore.zero? %>
+            <p class="mc-score"><%= movie.mcscore %></p>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
