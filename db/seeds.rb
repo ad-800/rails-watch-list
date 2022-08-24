@@ -4,12 +4,15 @@ require 'openssl'
 require 'json'
 require_relative 'scrape'
 
+# puts "cleaning database"
+# Movie.destroy_all
+
 # PARAMETERS
 country = 'pt'
 service = 'netflix' # prime, disney, hbo, hulu, peacock, paramount, starz, showtime, apple
 type = 'movie' # or series
 genre = ''
-page = 1
+page = 2
 url = URI("https://streaming-availability.p.rapidapi.com/search/basic?country=#{country}&service=#{service}&type=#{type}&genre=#{genre}&page=#{page}&output_language=en&language=en")
 
 http = Net::HTTP.new(url.host, url.port)
@@ -25,21 +28,24 @@ response = http.request(request)
 db = JSON.parse(response.read_body)
 
 db['results'].each do |result|
-  # Search for metacritic rating on imdb .score-meta
   puts "Calculating #{result['title']}"
   next if result['imdbRating'].to_i <= 60
+
+  rotten_array = scrape_rotten("https://www.rottentomatoes.com/m/#{result['title'].gsub(/[#^&@.]/, '').gsub(/\s/, '_')}")
+  next if rotten_array.nil?
 
   movies = { title: result['title'],
              year: result['year'],
              cast: result['cast'],
-             genres: result['genre'],
+             genre: result['genre'],
              overview: result['overview'],
-             poster: result['posterPath'],
-             imdb_rating: result['imdbRating'],
-             meta_rating: scrape_meta("https://www.imdb.com/title/#{result['imdbID']}/"),
-             rotten_rating: scrape_rotten("https://www.rottentomatoes.com/m/#{result['title'].gsub(/[#^&@.]/, '').gsub(/\s/, '_')}") }
+             poster_url: result['posterPath'],
+             mcscore: scrape_meta("https://www.imdb.com/title/#{result['imdbID']}/"),
+             rtscore: rotten_array[1].to_i,
+             rtauscore: rotten_array[0].to_i }
 
-  next if movies[:meta_rating].zero? && movies[:rotten_rating].nil?
-
+  puts "Sending #{result['title']} your way"
   Movie.create(movies)
 end
+
+puts 'End of seeding batch'
