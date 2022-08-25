@@ -14,7 +14,7 @@
               <% end %>
             <% end %>
             <% unless movie.mcscore.zero? %>
-            <p class="mc-score"><%= movie.mcscore %></p>
+            <p class="mc-score", style="background-color: <%= if movie.mcscore > 60 then '#67CC32' elsif movie.mcscore > 45 then '#FFCC33' else '#FF0101' end %>"><%= movie.mcscore %></p>
             <% end %>
           </div>
         </div>
