@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RailsWatchList</title>
+    <title>Pick One Already</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,8 +14,7 @@
     <nav class="navbar navbar-dark bg-dark justify-content-between">
       <a href="/lists" class="navbar-brand"><i class="fa-solid fa-clapperboard"></i> Pick One Already</a>
       <form class="form-inline">
-        <a href="/lists"><button class="btn first-nav btn-outline-primary my-2 my-sm-0" type="submit">My Lists</button></a>
-        <a href="/lists/new"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add List</button></a>
+        <a href="/"><button class="btn first-nav btn-outline-primary my-2 my-sm-0" type="submit">Generate New Movies</button></a>
       </form>
     </nav>
     <%= yield %>

@@ -1,7 +1,10 @@
 class MoviesController < ApplicationController
   def index
-    # Only wanted sample of 8
-    @movies = Movie.all
+    # Only wanted sample of 6
+    # count = Movie.count
+    # random_offset = rand(count)
+    # Movie.offset(random_offset).first
+    @movies = Movie.all.sample(5)
   end
 
   def show
