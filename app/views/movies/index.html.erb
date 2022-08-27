@@ -1,9 +1,9 @@
 <div class="index-container">
   <div class="container">
-    <div class="row">
+    <div class="row btn-list">
       <% @movies.each do |movie| %>
         <div class="col-2 column">
-          <img src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
+          <img class="mvbutton" src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
           <div class="score">
             <% unless movie.rtscore.zero? %>
               <% if movie.rtscore > 60 %>
@@ -25,6 +25,7 @@
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
     Launch static backdrop modal
   </button>
+
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

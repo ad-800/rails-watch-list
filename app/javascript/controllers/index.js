@@ -8,7 +8,7 @@ import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 // Modal Pop Up
-const buttons = document.querySelectorAll('.btn-list button');
+const buttons = document.querySelectorAll('.btn-list mvbutton');
 const modal = document.querySelector('.modal');
 buttons.forEach(button => {
   button.addEventListener('click', (event) => {
