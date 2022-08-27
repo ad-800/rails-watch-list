@@ -7,7 +7,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
@@ -17,6 +17,8 @@
         <a href="/"><button class="btn first-nav btn-outline-primary my-2 my-sm-0" type="submit">Generate New Movies</button></a>
       </form>
     </nav>
-    <%= yield %>
+    <div class="index-container">
+      <%= yield %>
+    </div>
   </body>
 </html>

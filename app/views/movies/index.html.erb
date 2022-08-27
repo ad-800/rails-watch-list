@@ -1,46 +1,41 @@
-<div class="index-container">
-  <div class="container">
-    <div class="row btn-list">
-      <% @movies.each do |movie| %>
-        <div class="col-2 column">
-          <img class="mvbutton" src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
-          <div class="score">
-            <% unless movie.rtscore.zero? %>
-              <% if movie.rtscore > 60 %>
-                <p class="rt-score"><%= image_tag "tomato.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
-              <% else %>
-                <p class="rt-score"><%= image_tag "tomatosplat.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
-              <% end %>
+<div class="container">
+  <div class="row btn-list">
+    <% @movies.each do |movie| %>
+      <div class="col-2 column" data-controller="click-popup">
+        <img id="<%= movie.id %>" data-click-popup-target="poster" class="mvbutton" src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
+        <div class="score">
+          <% unless movie.rtscore.zero? %>
+            <% if movie.rtscore > 60 %>
+              <p class="rt-score"><%= image_tag "tomato.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
+            <% else %>
+              <p class="rt-score"><%= image_tag "tomatosplat.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
             <% end %>
-            <% unless movie.mcscore.zero? %>
-            <p class="mc-score", style="background-color: <%= if movie.mcscore > 60 then '#67CC32' elsif movie.mcscore > 45 then '#FFCC33' else '#FF0101' end %>"><%= movie.mcscore %></p>
-            <% end %>
-          </div>
+          <% end %>
+          <% unless movie.mcscore.zero? %>
+          <p class="mc-score", style="background-color: <%= if movie.mcscore > 60 then '#67CC32' elsif movie.mcscore > 45 then '#FFCC33' else '#FF0101' end %>"><%= movie.mcscore %></p>
+          <% end %>
         </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
-  <h1>Watchlist</h1>
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-  </button>
+</div>
+<h1>Watchlist</h1>
+<!-- Button trigger modal -->
 
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
       </div>
     </div>
   </div>
