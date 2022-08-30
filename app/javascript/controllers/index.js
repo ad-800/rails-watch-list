@@ -4,8 +4,5 @@
 
 import { application } from "./application"
 
-import ClickPopupController from "./click_popup_controller"
-application.register("click-popup", ClickPopupController)
-
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import PopupController from "./popup_controller"
+application.register("popup", PopupController)

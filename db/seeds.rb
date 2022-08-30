@@ -12,7 +12,7 @@ country = 'pt'
 service = 'netflix' # prime, disney, hbo, hulu, peacock, paramount, starz, showtime, apple
 type = 'movie' # or series
 genre = ''
-page = 3
+page = 6
 url = URI("https://streaming-availability.p.rapidapi.com/search/basic?country=#{country}&service=#{service}&type=#{type}&genre=#{genre}&page=#{page}&output_language=en&language=en")
 
 http = Net::HTTP.new(url.host, url.port)
@@ -39,9 +39,13 @@ db['results'].each do |result|
              cast: result['cast'],
              overview: result['overview'],
              poster_url: result['posterPath'],
-             mcscore: scrape_meta("https://www.imdb.com/title/#{result['imdbID']}/"),
+             mcscore: scrape_meta("https://www.imdb.com/title/#{result['imdbID']}/").to_i,
              rtscore: rotten_array[1].to_i,
-             rtauscore: rotten_array[0].to_i }
+             rtauscore: rotten_array[0].to_i,
+             video: result['video'] }
+
+  next if !movies[:rtscore].nil? && movies[:rtscore] < 45
+  next if !movies[:mcscore].nil? && movies[:mcscore] < 35
 
   puts "Sending #{result['title']} your way"
   Movie.create(movies)

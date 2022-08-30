@@ -1,9 +1,14 @@
 <div class="container">
-  <div class="row btn-list">
+  <div class="row">
+    <% arr = [] %>
     <% @movies.each do |movie| %>
-      <div class="col-2 column" data-controller="click-popup">
-        <img id="<%= movie.id %>" data-click-popup-target="poster" class="mvbutton" src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
-        <div class="score">
+      <div class="col-2 column" draggable="true" ondragstart="drag(event)">
+        <img id='<%= movie.id %>' data-bs-toggle="modal" data-bs-target="#myModal" class="mvbutton" src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
+        <div id="score-<%= movie.id %>" class="score">
+          <% arr << { "#{movie.id}" => {
+                      title: movie.title,
+                      video: movie.video,
+                      overview: movie.overview }} %>
           <% unless movie.rtscore.zero? %>
             <% if movie.rtscore > 60 %>
               <p class="rt-score"><%= image_tag "tomato.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
@@ -20,23 +25,55 @@
   </div>
 </div>
 <h1>Watchlist</h1>
-<!-- Button trigger modal -->
+<div class="drag" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><%= arr[1][:title] %></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ...
+      <div class="modal-content">
+        <p></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
+        <button type="button" class="btn btn-primary">Save to Watchlist</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  // Modal Pop Up
+  // const buttons = document.querySelectorAll('.mvbutton');
+  // const modal = document.getElementById("myModal");
+  // buttons.forEach(button => {
+  //   button.addEventListener('click', (event) => {
+  //     console.log('Clicked!');
+  //     // const movie = Movie.find(data);
+  //     console.log(arr);
+  //     //modal.style.display = "block";
+  //     //const t = event.target.getAttribute('id')
+  //     //modal.querySelector('p').innerHTML = t;
+  //   })
+  // });
+
+  // Drag
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+    const element = document.getElementById(`score-${data}`);
+    element.remove();
+  }
+</script>
