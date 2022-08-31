@@ -26,16 +26,22 @@
                 <h5>Description</h5>
                 <p><%= movie.overview %></p>
                 <h5>Cast</h5>
-                <p><%= movie.cast %></p>
+                <p><%= movie.cast.gsub(/[\[\]\"\"]/, '') %></p>
                 <div class="flex-links">
-                  <%= link_to '<i class="fa-solid fa-square" style="font-size: 40px; color: #67CC32;"></i>'.html_safe, "https://www.metacritic.com/movie/#{(movie.title).gsub(/[#^&@.]/, '').gsub(/\s/, '-')}", target: "_blank" %>
+                  <% unless movie.mcscore.zero? %>
+                    <%= link_to '<i class="fa-solid fa-square" style="font-size: 40px; color: #67CC32;"></i>'.html_safe, "https://www.metacritic.com/movie/#{(movie.title).downcase.gsub(/[#^&@.]/, '').gsub(/\s/, '-')}", target: "_blank" %>
+                  <% end %>
                   <%= link_to '<i class="fa-brands fa-youtube" style="font-size: 40px;"></i>'.html_safe, "https://www.youtube.com/watch?v=#{movie.video}", target: "_blank" %>
                   <%= link_to '<i class="fa-solid fa-pizza-slice" style="font-size: 40px; color: #E63946;"></i>'.html_safe, "https://www.rottentomatoes.com/m/#{(movie.title).gsub(/[#^&@.]/, '').gsub(/\s/, '_')}", target: "_blank" %>
                 </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <% if movie.saved %>
+                <button type="button" class="btn btn-danger">Delete from Watchlist</button>
+                <% else %>
                 <button type="button" class="btn btn-primary">Save to Watchlist</button>
+                <% end %>
               </div>
             </div>
           </div>
@@ -48,20 +54,6 @@
 <div class="drag" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
 <script>
-  // Modal Pop Up
-  // const buttons = document.querySelectorAll('.mvbutton');
-  // const modal = document.getElementById("myModal");
-  // buttons.forEach(button => {
-  //   button.addEventListener('click', (event) => {
-  //     console.log('Clicked!');
-  //     // const movie = Movie.find(data);
-  //     console.log(arr);
-  //     //modal.style.display = "block";
-  //     //const t = event.target.getAttribute('id')
-  //     //modal.querySelector('p').innerHTML = t;
-  //   })
-  // });
-
   // Drag
   function allowDrop(ev) {
     ev.preventDefault();
@@ -75,9 +67,10 @@
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
 
-    //patch `/movies/${data}`, body: JSON.stringify({ movie: { favorite: true }})
+    //patch `/movies/${data}`, body: JSON.stringify({ movie: { saved: true }})
 
     ev.target.appendChild(document.getElementById(data));
+    // Remove score
     const element = document.getElementById(`score-${data}`);
     element.remove();
   }

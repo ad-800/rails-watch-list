@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   def index
-    # Only wanted sample of 6
+    # Only wanted sample of 5
     # count = Movie.count
     # random_offset = rand(count)
     # Movie.offset(random_offset).first
@@ -15,6 +15,12 @@ class MoviesController < ApplicationController
   def update
     # move movie to saved folder
     # changes db to saved: true
+    @movie = Movie.find(params[:id])
+    if @movie.saved
+      @movie.update(saved: false)
+    else
+      @movie.update(saved: true)
+    end
   end
 
   def destroy
