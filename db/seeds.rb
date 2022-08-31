@@ -12,7 +12,7 @@ country = 'pt'
 service = 'netflix' # prime, disney, hbo, hulu, peacock, paramount, starz, showtime, apple
 type = 'movie' # or series
 genre = ''
-page = 6
+page = 7
 url = URI("https://streaming-availability.p.rapidapi.com/search/basic?country=#{country}&service=#{service}&type=#{type}&genre=#{genre}&page=#{page}&output_language=en&language=en")
 
 http = Net::HTTP.new(url.host, url.port)

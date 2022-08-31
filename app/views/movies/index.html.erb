@@ -1,14 +1,9 @@
 <div class="container">
   <div class="row">
-    <% arr = [] %>
     <% @movies.each do |movie| %>
       <div class="col-2 column" draggable="true" ondragstart="drag(event)">
-        <img id='<%= movie.id %>' data-bs-toggle="modal" data-bs-target="#myModal" class="mvbutton" src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
+        <img id='<%= movie.id %>' data-bs-toggle="modal" data-bs-target="#modal-<%= movie.id %>" class="mvbutton" src="https://image.tmdb.org/t/p/w342<%= movie.poster_url %>" alt="movie poster for <%= movie.title %>">
         <div id="score-<%= movie.id %>" class="score">
-          <% arr << { "#{movie.id}" => {
-                      title: movie.title,
-                      video: movie.video,
-                      overview: movie.overview }} %>
           <% unless movie.rtscore.zero? %>
             <% if movie.rtscore > 60 %>
               <p class="rt-score"><%= image_tag "tomato.png", width: 40, height: 40, crop: :fill %><%= movie.rtscore %></p>
@@ -20,30 +15,37 @@
           <p class="mc-score", style="background-color: <%= if movie.mcscore > 60 then '#67CC32' elsif movie.mcscore > 45 then '#FFCC33' else '#FF0101' end %>"><%= movie.mcscore %></p>
           <% end %>
         </div>
+        <div class="modal fade" id="modal-<%= movie.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><%= movie.title %> (<%= movie.year %>)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-content">
+                <h5>Description</h5>
+                <p><%= movie.overview %></p>
+                <h5>Cast</h5>
+                <p><%= movie.cast %></p>
+                <div class="flex-links">
+                  <%= link_to '<i class="fa-solid fa-square" style="font-size: 40px; color: #67CC32;"></i>'.html_safe, "https://www.metacritic.com/movie/#{(movie.title).gsub(/[#^&@.]/, '').gsub(/\s/, '-')}", target: "_blank" %>
+                  <%= link_to '<i class="fa-brands fa-youtube" style="font-size: 40px;"></i>'.html_safe, "https://www.youtube.com/watch?v=#{movie.video}", target: "_blank" %>
+                  <%= link_to '<i class="fa-solid fa-pizza-slice" style="font-size: 40px; color: #E63946;"></i>'.html_safe, "https://www.rottentomatoes.com/m/#{(movie.title).gsub(/[#^&@.]/, '').gsub(/\s/, '_')}", target: "_blank" %>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save to Watchlist</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
 </div>
 <h1>Watchlist</h1>
 <div class="drag" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><%= arr[1][:title] %></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-content">
-        <p></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save to Watchlist</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
   // Modal Pop Up
@@ -72,6 +74,9 @@
   function drop(ev) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
+
+    //patch `/movies/${data}`, body: JSON.stringify({ movie: { favorite: true }})
+
     ev.target.appendChild(document.getElementById(data));
     const element = document.getElementById(`score-${data}`);
     element.remove();

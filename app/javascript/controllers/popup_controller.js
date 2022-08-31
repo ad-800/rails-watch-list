@@ -12,11 +12,6 @@ export default class extends Controller {
     // Modal Pop Up
     // data-controller="popup"
     // data-popup-target="movie"
-    const buttons = document.querySelectorAll('.mvbutton');
-    buttons.forEach(button => {
-      button.addEventListener('click', (event) => {
-        console.log('Hello!');
-      })
-    });
+    console.log('Stimulus is working');
   }
 }
