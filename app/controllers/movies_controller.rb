@@ -17,12 +17,13 @@ class MoviesController < ApplicationController
     else
       @movie.update(saved: true)
     end
+    redirect_to movies_path
   end
 
   def destroy
     # When you click a "x"
     @movie = Movie.find(params[:id])
     @movie.destroy
-    redirect_to lists_path, status: :see_other
+    redirect_to movies_path, status: :see_other
   end
 end

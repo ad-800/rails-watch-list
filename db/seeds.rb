@@ -9,10 +9,10 @@ require_relative 'scrape'
 
 # PARAMETERS
 country = 'pt'
+page = 16 # run 10 again
 service = 'netflix' # prime, disney, hbo, hulu, peacock, paramount, starz, showtime, apple
 type = 'movie' # or series
 genre = ''
-page = 7
 url = URI("https://streaming-availability.p.rapidapi.com/search/basic?country=#{country}&service=#{service}&type=#{type}&genre=#{genre}&page=#{page}&output_language=en&language=en")
 
 http = Net::HTTP.new(url.host, url.port)
