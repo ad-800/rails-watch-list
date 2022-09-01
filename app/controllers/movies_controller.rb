@@ -4,12 +4,8 @@ class MoviesController < ApplicationController
     # count = Movie.count
     # random_offset = rand(count)
     # Movie.offset(random_offset).first
-    @movies = Movie.all.sample(5)
-  end
-
-  def show
-    # pop up screen
-    @movie = Movie.find(params[:id])
+    @movies = Movie.where(saved: false).sample(5)
+    @saved = Movie.where(saved: true)
   end
 
   def update
