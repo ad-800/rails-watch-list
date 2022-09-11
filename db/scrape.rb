@@ -13,6 +13,7 @@ def scrape_meta(url)
 end
 
 def scrape_rotten(url)
+  # encoded_url = URI.encode(url)
   html_file = URI.parse(url)
   return unless url?(html_file)
 

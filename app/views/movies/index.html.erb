@@ -79,10 +79,10 @@
             <p><%= movie.cast.gsub(/[\[\]\"\"]/, '') %></p>
             <div class="flex-links">
               <% unless movie.mcscore.zero? %>
-                <%= link_to '<i class="fa-solid fa-square" style="font-size: 40px; color: #67CC32;"></i>'.html_safe, "https://www.metacritic.com/movie/#{(movie.title).downcase.gsub(/[#^&@.]/, '').gsub(/\s/, '-')}", target: "_blank" %>
+                <%= link_to '<i class="fa-solid fa-square" style="font-size: 40px; color: #67CC32;"></i>'.html_safe, "https://www.metacritic.com/movie/#{(movie.title).downcase.gsub(/[#^&@.:%]/, '').gsub(/\s/, '-')}", target: "_blank" %>
               <% end %>
               <%= link_to '<i class="fa-brands fa-youtube" style="font-size: 40px;"></i>'.html_safe, "https://www.youtube.com/watch?v=#{movie.video}", target: "_blank" %>
-              <%= link_to '<i class="fa-solid fa-pizza-slice" style="font-size: 40px; color: #E63946;"></i>'.html_safe, "https://www.rottentomatoes.com/m/#{(movie.title).gsub(/[#^&@.]/, '').gsub(/\s/, '_')}", target: "_blank" %>
+              <%= link_to '<i class="fa-solid fa-pizza-slice" style="font-size: 40px; color: #E63946;"></i>'.html_safe, "https://www.rottentomatoes.com/m/#{(movie.title).gsub(/[#^&@.:%]/, '').gsub(/\s/, '_')}", target: "_blank" %>
             </div>
           </div>
           <div class="modal-footer">
