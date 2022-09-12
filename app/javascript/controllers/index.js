@@ -4,5 +4,3 @@
 
 import { application } from "./application"
 
-import PopupController from "./popup_controller"
-application.register("popup", PopupController)
