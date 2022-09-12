@@ -31,7 +31,8 @@ db['results'].each do |result|
   puts "Calculating #{result['title']}"
   next if result['imdbRating'].to_i <= 60
 
-  rotten_array = scrape_rotten("https://www.rottentomatoes.com/m/#{result['title'].gsub(/[#^&@.:%]/, '').gsub(/\s/, '_')}")
+  rotten_array = scrape_rotten("https://www.rottentomatoes.com/m/
+                               #{result['title'].gsub(/[#^&@.:%]/, '').gsub(/\s/, '_')}")
   next if rotten_array.nil?
 
   movies = { title: result['title'],
